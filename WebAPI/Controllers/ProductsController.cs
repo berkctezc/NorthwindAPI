@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using System.Linq;
+using Business.Abstract;
 using Entitites.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,12 +7,12 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
 
         private IProductService _productService;
 
-        public ProductController(IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
@@ -52,7 +53,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("add")]
+        [HttpPost("add")]
         public IActionResult Add(Product product)
         {
             var result = _productService.Add(product);
@@ -64,7 +65,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("update")]
+        [HttpPost("update")]
         public IActionResult Update(Product product)
         {
             var result = _productService.Update(product);
@@ -76,7 +77,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
        
-        [HttpGet("delete")]
+        [HttpPost("delete")]
         public IActionResult Delete(Product product)
         {
             var result = _productService.Delete(product);
