@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Entitites.Concrete
+namespace Entities.Concrete
 {
     public class Category : IEntity
     {

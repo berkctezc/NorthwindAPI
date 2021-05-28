@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using Business.Abstract;
-using Entitites.Concrete;
+﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -9,7 +8,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-
         private IProductService _productService;
 
         public ProductsController(IProductService productService)
@@ -76,7 +74,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result.Message);
         }
-       
+
         [HttpPost("delete")]
         public IActionResult Delete(Product product)
         {

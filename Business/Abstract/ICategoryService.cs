@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
-using Core.Utilities.Results;
-using Entitites.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
+using System.Collections.Generic;
 
 namespace Business.Abstract
 {
     public interface ICategoryService
     {
         IDataResult<Category> GetById(int categoryId);
+
         IDataResult<List<Category>> GetList();
+
         IResult Add(Category category);
+
         IResult Update(Category category);
+
         IResult Delete(Category category);
     }
 }

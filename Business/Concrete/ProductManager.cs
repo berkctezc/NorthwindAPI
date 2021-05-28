@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entitites.Concrete;
+using Entities.Concrete;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -50,6 +50,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
     }
+
     public class CategoryManager : ICategoryService
     {
         private ICategoryDal _categoryDal;
