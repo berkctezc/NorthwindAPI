@@ -30,26 +30,26 @@ namespace Business.Concrete
                 LastName = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                status = true
+                Status = true
             };
             _userService.Add(user);
-            return new SuccessDataResult<User>(Messages.UserRegistered);
+            return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var UserToCheck = _userService.GetByMail(userForLoginDto.Email);
-            if (UserToCheck == null)
+            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
+            if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, UserToCheck.PasswordHash, UserToCheck.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
 
-            return new SuccessDataResult<User>(Messages.LoginSuccessful);
+            return new SuccessDataResult<User>(userToCheck, Messages.LoginSuccessful);
         }
 
         public IResult UserExists(string email)
@@ -58,14 +58,13 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
-
             return new SuccessResult();
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims=_userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user,claims);
+            var claims = _userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
     }
