@@ -21,7 +21,19 @@ namespace Business.Concrete
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
-            throw new System.NotImplementedException();
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var user = new User
+            {
+                Email = userForRegisterDto.Email,
+                FirstName = userForRegisterDto.FirstName,
+                LastName = userForRegisterDto.LastName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                status = true
+            };
+            _userService.Add(user);
+            return new SuccessDataResult<User>(Messages.UserRegistered);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -32,7 +44,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password,UserToCheck.PasswordHash,UserToCheck.PasswordSalt))
+            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, UserToCheck.PasswordHash, UserToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
@@ -52,7 +64,9 @@ namespace Business.Concrete
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            throw new System.NotImplementedException();
+            var claims=_userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user,claims);
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
     }
 }
