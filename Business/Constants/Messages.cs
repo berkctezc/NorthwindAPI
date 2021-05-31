@@ -1,4 +1,6 @@
-﻿namespace Business.Constants
+﻿using Core.Entities.Concrete;
+
+namespace Business.Constants
 {
     public static class Messages
     {
@@ -9,5 +11,10 @@
         public static string CategoryAdded = "Kategori başarıyla eklendi";
         public static string CategoryUpdated = "Kategori başarıyla güncellendi";
         public static string CategoryDeleted = "Kategori başarıyla silindi";
+
+        public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string PasswordError = "Şifre hatalı";
+        public static string LoginSuccessful = "Başarılı giriş yapıldı";
+        public static string UserAlreadyExists = "Kullanıcı mevcut";
     }
 }
